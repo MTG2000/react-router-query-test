@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <nav className="bg-black py-24 px-32 flex justify-between items-center">
       <Link to="/" className="text-body1 text-white hover:text-white font-bold">
-        App Logo
+        Router + Query + Rick & Morty
       </Link>
 
       <ul className="flex gap-16 ">
