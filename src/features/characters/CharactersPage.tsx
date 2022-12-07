@@ -20,7 +20,11 @@ export default function CharactersPage() {
             key={character.id}
             className="rounded-12 overflow-hidden bg-gray-900"
           >
-            <Link to={character.id.toString()} className="flex flex-col h-full">
+            <Link
+              to={character.id.toString()}
+              className="flex flex-col h-full"
+              state={{ loadingText: "Getting character details..." }}
+            >
               <img src={character.image} alt="" className="w-full" />
               <div className="p-12 text-white flex flex-col gap-4 grow">
                 <p className="font-medium text-body2">{character.name}</p>

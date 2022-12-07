@@ -22,6 +22,7 @@ export default function Navbar() {
               )
             }
             to="/characters"
+            state={{ loadingText: "Fetching characters..." }}
           >
             Characters
           </NavLink>
@@ -38,6 +39,7 @@ export default function Navbar() {
               )
             }
             to="/episodes"
+            state={{ loadingText: "Fetching episodes..." }}
           >
             Episodes
           </NavLink>
