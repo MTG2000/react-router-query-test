@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "vitest",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -19,15 +20,19 @@
     "tailwind-merge": "^1.8.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
     "@types/node": "^18.11.11",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@types/react-modal": "^3.13.1",
     "@vitejs/plugin-react": "^2.2.0",
     "autoprefixer": "^10.4.13",
+    "jsdom": "^20.0.3",
     "postcss": "^8.4.19",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.6.4",
-    "vite": "^3.2.3"
+    "vite": "^3.2.3",
+    "vitest": "^0.25.6"
   }
 }

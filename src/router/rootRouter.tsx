@@ -31,7 +31,7 @@ const EpisodeDetailsPage = React.lazy(
   () => import("../features/episodes/EpisodeDetailsPage")
 );
 
-const routes = createRoutesFromElements(
+export const routes = createRoutesFromElements(
   <Route
     element={<AppLayout />}
     errorElement={<ErrorOverlay>An Error happened somewhere!</ErrorOverlay>}
