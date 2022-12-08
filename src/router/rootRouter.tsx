@@ -13,6 +13,7 @@ import { characterDetailsLoader } from "@/features/characters/characterDetailsQu
 import { charactersPageLoader } from "@/features/characters/charactersPageQuery";
 import { episodeDetailsLoader } from "@/features/episodes/episodeDetailsQuery";
 import { episodesPageLoader } from "@/features/episodes/episodesPageQuery";
+import ErrorOverlay from "@/Common/ErrorOverlay/ErrorOverlay";
 
 const HomePage = React.lazy(() => import("../features/home/HomePage"));
 
@@ -31,10 +32,18 @@ const EpisodeDetailsPage = React.lazy(
 );
 
 const routes = createRoutesFromElements(
-  <Route element={<AppLayout />}>
+  <Route
+    element={<AppLayout />}
+    errorElement={<ErrorOverlay>An Error happened somewhere!</ErrorOverlay>}
+  >
     <Route index element={<HomePage />} />
 
-    <Route path="/characters">
+    <Route
+      path="/characters"
+      errorElement={
+        <ErrorOverlay>An Error happened fetching characters!</ErrorOverlay>
+      }
+    >
       <Route
         path=":characterId"
         element={<CharacterDetailsPage />}
@@ -47,16 +56,15 @@ const routes = createRoutesFromElements(
       />
     </Route>
 
-    <Route path="/episodes">
+    <Route
+      path="/episodes"
+      element={<EpisodesPage />}
+      loader={episodesPageLoader(queryClient)}
+    >
       <Route
         path=":episodeId"
         element={<EpisodeDetailsPage />}
         loader={episodeDetailsLoader(queryClient)}
-      />
-      <Route
-        index
-        element={<EpisodesPage />}
-        loader={episodesPageLoader(queryClient)}
       />
     </Route>
   </Route>

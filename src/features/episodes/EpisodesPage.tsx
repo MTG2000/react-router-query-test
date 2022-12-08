@@ -1,14 +1,51 @@
+import path from "path";
 import { Suspense } from "react";
-import { Await, Link, useLoaderData } from "react-router-dom";
+import {
+  Await,
+  Link,
+  matchPath,
+  matchRoutes,
+  Outlet,
+  useLoaderData,
+  useLocation,
+} from "react-router-dom";
+import EpisodeDetailsModal from "./EpisodeDetailsModal";
+import EpisodeDetailsPage from "./EpisodeDetailsPage";
 import { LoaderData } from "./episodesPageQuery";
 
-export default function EpisodesPage() {
+export default function EpisodesPageWrapper() {
+  const { pathname, state } = useLocation();
+
+  const onDetailsPage = onEpisodeDetailsPage(pathname);
+  const openAsModal = state?.openModal;
+
+  const whatToShow = onDetailsPage
+    ? openAsModal
+      ? "list + modal"
+      : "details_page"
+    : "list_page";
+
+  if (whatToShow === "list + modal")
+    return (
+      <>
+        <EpisodesListPage />
+        <EpisodeDetailsModal />
+      </>
+    );
+
+  if (whatToShow === "details_page") return <EpisodeDetailsPage />;
+
+  if (whatToShow === "list_page") return <EpisodesListPage />;
+
+  throw Error("URL invalid. Please go back to the episodes page & try again.");
+}
+
+function EpisodesListPage() {
   const { data } = useLoaderData() as LoaderData;
 
   return (
     <div>
       <h1 className="text-h1 mb-32">Episodes</h1>
-      {/* {query.isLoading && <h2>Loading episodes...</h2>} */}
       <Suspense
         fallback={
           <p className="text-body2 text-white text-center py-36">
@@ -26,7 +63,10 @@ export default function EpisodesPage() {
                 >
                   <Link
                     to={episode.id.toString()}
-                    state={{ loadingText: "Getting Episode Details..." }}
+                    state={{
+                      loadingText: "Getting Episode Details...",
+                      openModal: true,
+                    }}
                     className="flex flex-col h-full"
                   >
                     <div className="p-12 text-white flex flex-col gap-4 grow">
@@ -48,4 +88,8 @@ export default function EpisodesPage() {
       </Suspense>
     </div>
   );
+}
+
+function onEpisodeDetailsPage(pathname: string) {
+  return matchPath("/episodes/:episodeId", pathname);
 }

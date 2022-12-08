@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import GlobalLoader from "../GlobalLoader/GlobalLoader";
 import Navbar from "../Navbar/Navbar";
 import HashLoader from "react-spinners/HashLoader";
