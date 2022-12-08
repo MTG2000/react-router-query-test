@@ -56,7 +56,7 @@ function EpisodesListPage() {
         <Await resolve={data}>
           {(resolved: typeof data) => (
             <ul className="grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
-              {resolved.data.results?.map((episode) => (
+              {resolved.results?.map((episode) => (
                 <li
                   key={episode.id}
                   className="rounded-12 overflow-hidden bg-gray-900"

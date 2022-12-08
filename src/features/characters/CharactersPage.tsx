@@ -15,7 +15,7 @@ export default function CharactersPage() {
       <h1 className="text-h1 mb-32">Characters</h1>
       {query.isLoading && <h2>Loading Characters...</h2>}
       <ul className="grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
-        {query.data.data.results?.map((character) => (
+        {query.data.results?.map((character) => (
           <li
             key={character.id}
             className="rounded-12 overflow-hidden bg-gray-900"

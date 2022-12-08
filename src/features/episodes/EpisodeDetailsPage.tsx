@@ -20,10 +20,10 @@ export default function EpisodeDetailsPage() {
       >
         ⬅️ <span className="underline">Back</span>
       </Link>
-      <h1 className="text-h1">{query.data.data.name}</h1>
-      <p>{query.data.data.episode}</p>
+      <h1 className="text-h1">{query.data.name}</h1>
+      <p>{query.data.episode}</p>
       <p className="font-medium text-gray-400 text-body4 mb-4">
-        {query.data.data.air_date}
+        {query.data.air_date}
       </p>
     </div>
   );
