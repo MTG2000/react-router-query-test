@@ -46,6 +46,12 @@ export default function CharactersFilters() {
       <h3 className="text-h3 mb-16">Filters</h3>
       <div className="flex flex-col gap-12">
         <Select
+          aria-label="status filter"
+          formatOptionLabel={(option) => (
+            <span data-testid={`select-option ${option.label}`}>
+              {option.label}
+            </span>
+          )}
           options={statusOptions}
           onChange={(option) => filters.setStatus(option?.value)}
           value={statusOptions.find((o) => o.value === filters.status)}
@@ -61,9 +67,15 @@ export default function CharactersFilters() {
           value={genderOptions.find((o) => o.value === filters.gender)}
           placeholder="Filter by gender"
           isClearable
+          formatOptionLabel={(option) => (
+            <span data-testid={`select-option ${option.label}`}>
+              {option.label}
+            </span>
+          )}
           classNames={{
             option: () => "!text-gray-900",
           }}
+          aria-label="gender filter"
         />
       </div>
     </div>
