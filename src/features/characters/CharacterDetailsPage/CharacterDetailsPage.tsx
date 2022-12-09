@@ -20,8 +20,15 @@ export default function CharacterDetailsPage() {
       >
         ⬅️ <span className="underline">Back</span>
       </Link>
-      <h1 className="text-h1">{query.data.name}</h1>
+      <h1 className="text-h1 font-bolder mb-24">{query.data.name}</h1>
       <img src={query.data.image} alt="" className="max-w-[240px]" />
+      <div className="flex flex-col gap-12 mt-12">
+        <p className="font-medium text-gray-200 text-body3">
+          {query.data.species}
+        </p>
+        <p className="text-body4 text-gray-300">{query.data.status}</p>
+        <p className="text-body4 text-gray-300">{query.data.gender}</p>
+      </div>
     </div>
   );
 }

@@ -9,8 +9,8 @@ import {
 import React from "react";
 import AppLayout from "../Common/AppLayout/AppLayout";
 import { queryClient } from "@/utils/apiClient";
-import { characterDetailsLoader } from "@/features/characters/characterDetailsQuery";
-import { charactersPageLoader } from "@/features/characters/charactersPageQuery";
+import { characterDetailsLoader } from "@/features/characters/CharacterDetailsPage/characterDetailsQuery";
+import { charactersPageLoader } from "@/features/characters/CharactersPage/charactersPageQuery";
 import { episodeDetailsLoader } from "@/features/episodes/episodeDetailsQuery";
 import { episodesPageLoader } from "@/features/episodes/episodesPageQuery";
 import ErrorOverlay from "@/Common/ErrorOverlay/ErrorOverlay";
@@ -18,10 +18,11 @@ import ErrorOverlay from "@/Common/ErrorOverlay/ErrorOverlay";
 const HomePage = React.lazy(() => import("../features/home/HomePage"));
 
 const CharactersPage = React.lazy(
-  () => import("../features/characters/CharactersPage")
+  () => import("../features/characters/CharactersPage/CharactersPage")
 );
 const CharacterDetailsPage = React.lazy(
-  () => import("../features/characters/CharacterDetailsPage")
+  () =>
+    import("../features/characters/CharacterDetailsPage/CharacterDetailsPage")
 );
 
 const EpisodesPage = React.lazy(
