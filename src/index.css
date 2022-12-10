@@ -10,7 +10,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: theme(colors.gray.700);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,13 +19,12 @@
   -webkit-text-size-adjust: 100%;
 }
 
- 
-
 html {
   scrollbar-gutter: stable;
 }
 
 body {
+  /* background-color: theme(colors.blue.500); */
   margin: 0;
   min-width: 320px;
   min-height: 100vh;

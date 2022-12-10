@@ -3,13 +3,6 @@ import CharactersFilters from "../CharactersFilters";
 import { CharactersFiltersProvider } from "../CharactersFiltersContext";
 import userEvent from "@testing-library/user-event";
 
-const renderWithProviders = () =>
-  render(
-    <CharactersFiltersProvider>
-      <CharactersFilters />
-    </CharactersFiltersProvider>
-  );
-
 describe("Characters Filters", () => {
   it("Renders correctly", () => {
     renderWithProviders();
@@ -42,6 +35,13 @@ describe("Characters Filters", () => {
     expect(screen.getByText(/male/i)).toBeInTheDocument();
   });
 });
+
+const renderWithProviders = () =>
+  render(
+    <CharactersFiltersProvider>
+      <CharactersFilters />
+    </CharactersFiltersProvider>
+  );
 
 const queries = {
   statusSelect: () => screen.getByLabelText(/status/i),

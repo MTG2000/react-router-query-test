@@ -42,7 +42,7 @@ export default function CharactersFilters() {
   const filters = useCharactersFilter();
 
   return (
-    <div className="bg-blue-600 bg-opacity-50 p-16 rounded">
+    <div className="bg-gray-900 p-16 rounded">
       <h3 className="text-h3 mb-16">Filters</h3>
       <div className="flex flex-col gap-12">
         <Select

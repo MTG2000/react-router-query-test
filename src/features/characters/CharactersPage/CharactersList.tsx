@@ -13,14 +13,14 @@ export default function CharactersList({ characters }: Props) {
       {characters?.map((character) => (
         <li
           key={character.id}
-          className="rounded-12 overflow-hidden bg-gray-900"
+          className="rounded-12 bg-gray-900 focus-within:bg-gray-800"
         >
           <Link
             to={character.id.toString()}
-            className="flex flex-col h-full"
+            className="flex flex-col h-full focus:outline-2 focus:outline-white"
             state={{ loadingText: "Getting character details..." }}
           >
-            <img src={character.image} alt="" className="w-full" />
+            <img src={character.image} alt="" className="w-full rounded-t-12" />
             <div className="p-16 text-white flex flex-col gap-4 grow">
               <p className="font-bold text-body2">{character.name}</p>
               <p className="font-medium text-gray-200 text-body3">
@@ -30,7 +30,10 @@ export default function CharactersList({ characters }: Props) {
               <p className="text-body4 text-gray-300">{character.gender}</p>
 
               <div className="mt-auto"></div>
-              <button className="bg-gray-100 text-gray-800 px-12 py-4 rounded-8 w-full">
+              <button
+                tabIndex={-1}
+                className="bg-gray-100 text-gray-800 px-12 py-8 rounded-8 w-full font-bold "
+              >
                 Read more
               </button>
             </div>

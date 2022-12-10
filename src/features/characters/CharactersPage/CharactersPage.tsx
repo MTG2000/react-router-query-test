@@ -23,7 +23,7 @@ function CharactersPage() {
   if (!query.data) return <></>;
 
   return (
-    <div>
+    <main>
       <h1 className="text-h1 mb-32 font-bolder">Explore Characters</h1>
       <div className="grid grid-cols-1 md:grid-cols-[1fr_min(25%,326px)] gap-24">
         <CharactersList characters={query.data.results} />
@@ -33,7 +33,7 @@ function CharactersPage() {
           </div>
         </aside>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -1,11 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
+      colors:{
+        primary:{
+          dark: "#fe2221",
+          light:"#fe2221",
+          normal:"#fe2221",
+        }
+      },
       boxShadow: {
         xs: "0px 1px 2px rgba(16, 24, 40, 0.05)",
         sm:
