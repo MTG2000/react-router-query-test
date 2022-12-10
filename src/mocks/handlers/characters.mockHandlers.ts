@@ -50,8 +50,21 @@ const characters: Partial<Character>[] = [
 
 export const charactersApiHandlers = [
   rest.get("https://rickandmortyapi.com/api/character", (req, res, ctx) => {
-    console.log(req.params);
+    const statusFilter = req.url.searchParams.get("status");
+    const genderFilter = req.url.searchParams.get("gender");
 
-    return res(ctx.status(200), ctx.json(wrapWithInfo(characters)));
+    const filteredItems = characters
+      .filter((item) =>
+        statusFilter
+          ? item.status?.toLowerCase() === statusFilter.toLowerCase()
+          : true
+      )
+      .filter((item) =>
+        genderFilter
+          ? item.gender?.toLowerCase() === genderFilter.toLowerCase()
+          : true
+      );
+
+    return res(ctx.status(200), ctx.json(wrapWithInfo(filteredItems)));
   }),
 ];
