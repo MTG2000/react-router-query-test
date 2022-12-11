@@ -92,11 +92,11 @@ export const createRouter = (
     : createBrowserRouter(routes, options);
 };
 
-// export const useCurrentPath = () => {
-//   const location = useLocation();
-//   const matches = matchRoutes(routes, location);
-//   return matches;
-// };
+export const useCurrentPath = () => {
+  const location = useLocation();
+  const matches = matchRoutes(routes, location);
+  return matches;
+};
 
 export const RootRouter = () => {
   return <RouterProvider router={createRouter()} />;
