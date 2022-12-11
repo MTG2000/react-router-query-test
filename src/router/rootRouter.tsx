@@ -5,6 +5,7 @@ import {
   RouterProvider,
   useLocation,
   matchRoutes,
+  Navigate,
 } from "react-router-dom";
 import React from "react";
 import AppLayout from "../Common/AppLayout/AppLayout";
@@ -35,14 +36,19 @@ const EpisodeDetailsPage = React.lazy(
 export const routes = createRoutesFromElements(
   <Route
     element={<AppLayout />}
-    errorElement={<ErrorOverlay>An Error happened somewhere!</ErrorOverlay>}
+    errorElement={
+      <ErrorOverlay
+        defaultTitle="Ooops..."
+        defaultBody="An unexpected error happened, please try refreshing the page."
+      />
+    }
   >
-    <Route index element={<HomePage />} />
+    <Route index element={<Navigate to={"/characters"} />} />
 
     <Route
       path="/characters"
       errorElement={
-        <ErrorOverlay>An Error happened fetching characters!</ErrorOverlay>
+        <ErrorOverlay defaultBody="An error happened while fetching characters" />
       }
     >
       <Route
@@ -61,6 +67,7 @@ export const routes = createRoutesFromElements(
       path="/episodes"
       element={<EpisodesPage />}
       loader={episodesPageLoader(queryClient)}
+      errorElement={<ErrorOverlay />}
     >
       <Route
         path=":episodeId"

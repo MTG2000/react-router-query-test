@@ -11,8 +11,14 @@ export async function getAllEpisodes() {
 }
 
 export async function getEpisodeById(id: number) {
-  await delay();
-  return fetch(`https://rickandmortyapi.com/api/episode/${id}`).then((res) =>
-    res.json()
-  ) as Promise<Episode>;
+  const res = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
+  const json = await res.json();
+
+  if (!res.ok)
+    throw new Response(json.error, {
+      status: res.status,
+      statusText: res.statusText,
+    });
+
+  return json as Episode;
 }

@@ -8,9 +8,16 @@ interface Props {
 }
 
 export default function CharactersList({ characters }: Props) {
+  if (!characters || characters.length === 0)
+    return (
+      <div className="py-32 text-center">
+        <p className="text-body3">Nothing here to show...</p>
+      </div>
+    );
+
   return (
     <ul className="grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
-      {characters?.map((character) => (
+      {characters.map((character) => (
         <li
           key={character.id}
           className="rounded-12 bg-gray-900 focus-within:bg-gray-800"

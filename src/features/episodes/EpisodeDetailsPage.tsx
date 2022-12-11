@@ -11,6 +11,10 @@ export default function EpisodeDetailsPage() {
     initialData: data,
   });
 
+  console.log(data);
+
+  if (!query.data) return <h2>404</h2>;
+
   return (
     <div>
       <Link

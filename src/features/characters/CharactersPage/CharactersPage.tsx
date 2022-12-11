@@ -29,7 +29,7 @@ function CharactersPage() {
         <CharactersList characters={query.data.results} />
         <aside>
           <div className="sticky top-24">
-            <CharactersFilters />
+            <CharactersFilters isLoading={query.isPreviousData} />
           </div>
         </aside>
       </div>

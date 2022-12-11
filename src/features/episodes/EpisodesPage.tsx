@@ -16,7 +16,7 @@ import { LoaderData } from "./episodesPageQuery";
 export default function EpisodesPageWrapper() {
   const { pathname, state } = useLocation();
 
-  const onDetailsPage = onEpisodeDetailsPage(pathname);
+  const onDetailsPage = isOnDetailsPage(pathname);
   const openAsModal = state?.openModal;
 
   const whatToShow = onDetailsPage
@@ -90,6 +90,6 @@ function EpisodesListPage() {
   );
 }
 
-function onEpisodeDetailsPage(pathname: string) {
+function isOnDetailsPage(pathname: string) {
   return matchPath("/episodes/:episodeId", pathname);
 }
