@@ -1,4 +1,5 @@
 import { removeUndefinedFromObject } from "@/utils/helpers";
+import axios from "axios";
 import { Info, Character } from "rickmortyapi/dist/interfaces";
 
 const delay = (ms: number = 2000) => new Promise((res) => setTimeout(res, ms));
@@ -8,8 +9,14 @@ type Filters = {
   gender: "male" | "female" | "genderless" | "unknown";
 };
 
+export const apiRoutes = {
+  getCharacters: "https://rickandmortyapi.com/api/character",
+  getCharacterById: (id: number) =>
+    `https://rickandmortyapi.com/api/character/${id}`,
+};
+
 export async function getCharacters(_filters?: Partial<Filters>) {
-  let url = "https://rickandmortyapi.com/api/character";
+  let url = apiRoutes.getCharacters;
   const filters = removeUndefinedFromObject(_filters);
   const hasFilters = filters && Object.keys(filters).length > 0;
 
@@ -22,19 +29,17 @@ export async function getCharacters(_filters?: Partial<Filters>) {
     });
   }
 
-  const res = await fetch(url);
-  const json = await res.json();
+  const res = await axios.get(url);
 
-  if (json.error) throw new Error(json.error);
+  if (res.data.error) throw new Error(res.data.error);
 
-  return json as Info<Character[]>;
+  return res.data as Info<Character[]>;
 }
 
 export async function getCharacterById(id: number) {
-  const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-  const json = await res.json();
+  const res = await axios.get(apiRoutes.getCharacterById(id));
 
-  if (json.error) throw new Error(json.error);
+  if (res.data.error) throw new Error(res.data.error);
 
-  return json as Character;
+  return res.data as Character;
 }

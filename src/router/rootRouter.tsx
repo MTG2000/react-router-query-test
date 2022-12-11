@@ -6,15 +6,17 @@ import {
   useLocation,
   matchRoutes,
   Navigate,
+  createMemoryRouter,
 } from "react-router-dom";
 import React from "react";
 import AppLayout from "../Common/AppLayout/AppLayout";
-import { queryClient } from "@/utils/apiClient";
+import { getQueryClient, queryClient } from "@/utils/apiClient";
 import { characterDetailsLoader } from "@/features/characters/CharacterDetailsPage/characterDetailsQuery";
 import { charactersPageLoader } from "@/features/characters/CharactersPage/charactersPageQuery";
 import { episodeDetailsLoader } from "@/features/episodes/episodeDetailsQuery";
 import { episodesPageLoader } from "@/features/episodes/episodesPageQuery";
 import ErrorOverlay from "@/Common/ErrorOverlay/ErrorOverlay";
+import { CONSTS } from "@/utils/consts";
 
 const HomePage = React.lazy(() => import("../features/home/HomePage"));
 
@@ -33,59 +35,69 @@ const EpisodeDetailsPage = React.lazy(
   () => import("../features/episodes/EpisodeDetailsPage")
 );
 
-export const routes = createRoutesFromElements(
-  <Route
-    element={<AppLayout />}
-    errorElement={
-      <ErrorOverlay
-        defaultTitle="Ooops..."
-        defaultBody="An unexpected error happened, please try refreshing the page."
-      />
-    }
-  >
-    <Route index element={<Navigate to={"/characters"} />} />
-
+const createRoutes = () =>
+  createRoutesFromElements(
     <Route
-      path="/characters"
+      element={<AppLayout />}
       errorElement={
-        <ErrorOverlay defaultBody="An error happened while fetching characters" />
+        <ErrorOverlay
+          defaultTitle="Ooops..."
+          defaultBody="An unexpected error happened, please try refreshing the page."
+        />
       }
     >
+      <Route index element={<Navigate to={"/characters"} />} />
       <Route
-        path=":characterId"
-        element={<CharacterDetailsPage />}
-        loader={characterDetailsLoader(queryClient)}
-      />
+        path="/characters"
+        errorElement={
+          <ErrorOverlay defaultBody="An error happened while fetching characters" />
+        }
+      >
+        <Route
+          path=":characterId"
+          element={<CharacterDetailsPage />}
+          loader={characterDetailsLoader(getQueryClient())}
+        />
+        <Route
+          index
+          element={<CharactersPage />}
+          loader={charactersPageLoader(getQueryClient())}
+        />
+      </Route>
+
       <Route
-        index
-        element={<CharactersPage />}
-        loader={charactersPageLoader(queryClient)}
-      />
+        path="/episodes"
+        element={<EpisodesPage />}
+        loader={episodesPageLoader(getQueryClient())}
+        errorElement={<ErrorOverlay />}
+      >
+        <Route
+          path=":episodeId"
+          element={<EpisodeDetailsPage />}
+          loader={episodeDetailsLoader(getQueryClient())}
+        />
+      </Route>
     </Route>
+  );
 
-    <Route
-      path="/episodes"
-      element={<EpisodesPage />}
-      loader={episodesPageLoader(queryClient)}
-      errorElement={<ErrorOverlay />}
-    >
-      <Route
-        path=":episodeId"
-        element={<EpisodeDetailsPage />}
-        loader={episodeDetailsLoader(queryClient)}
-      />
-    </Route>
-  </Route>
-);
+export const routes = createRoutes();
 
-const router = createBrowserRouter(routes);
+export const createRouter = (
+  options?: Parameters<typeof createMemoryRouter>[1]
+) => {
+  const routes = createRoutes();
 
-export const useCurrentPath = () => {
-  const location = useLocation();
-  const matches = matchRoutes(routes, location);
-  return matches;
+  return CONSTS.isTestEnv
+    ? createMemoryRouter(routes, options)
+    : createBrowserRouter(routes, options);
 };
 
+// export const useCurrentPath = () => {
+//   const location = useLocation();
+//   const matches = matchRoutes(routes, location);
+//   return matches;
+// };
+
 export const RootRouter = () => {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={createRouter()} />;
 };

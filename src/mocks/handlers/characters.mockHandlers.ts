@@ -1,6 +1,7 @@
 import { graphql, rest } from "msw";
 import { Character } from "rickmortyapi/dist/interfaces";
-import { wrapWithInfo } from "../helpers/utils";
+import { createOverrideHandler, wrapWithInfo } from "../helpers/utils";
+import { API_ROUTES } from "@/api";
 
 // Mock Data
 const characters: Partial<Character>[] = [
@@ -49,7 +50,7 @@ const characters: Partial<Character>[] = [
 ];
 
 export const charactersApiHandlers = [
-  rest.get("https://rickandmortyapi.com/api/character", (req, res, ctx) => {
+  rest.get(API_ROUTES.getCharacters, (req, res, ctx) => {
     const statusFilter = req.url.searchParams.get("status");
     const genderFilter = req.url.searchParams.get("gender");
 
@@ -68,3 +69,11 @@ export const charactersApiHandlers = [
     return res(ctx.status(200), ctx.json(wrapWithInfo(filteredItems)));
   }),
 ];
+
+export const charactersOverrides = {
+  getCharacters: createOverrideHandler<Partial<Character>[]>(
+    "get",
+    API_ROUTES.getCharacters,
+    { wrapResponse: wrapWithInfo }
+  ),
+};

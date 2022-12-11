@@ -1,15 +1,9 @@
-import {
-  render,
-  screen,
-  userEvent,
-  waitForElementToBeRemoved,
-} from "@/utils/tests.utils";
-import {
-  createMemoryRouter,
-  MemoryRouter,
-  RouterProvider,
-} from "react-router-dom";
-import CharactersPage from "../CharactersPage";
+import { MOCKS_OVERRIDES } from "@/mocks/handlers";
+import { server } from "@/mocks/server";
+import { createRouter } from "@/router/rootRouter";
+import { appRoutes } from "@/router/routes";
+import { render, screen, userEvent, within } from "@/utils/tests.utils";
+import { RouterProvider } from "react-router-dom";
 
 describe("Characters Page", () => {
   it("renders correctly", async () => {
@@ -28,22 +22,46 @@ describe("Characters Page", () => {
     const deadOption = await screen.findByTestId(`select-option Dead`);
     await userEvent.click(deadOption);
 
-    await waitForElementToBeRemoved(screen.queryAllByText(/Alive/i));
+    const charactersCards = queries.charactersItems();
+    charactersCards.forEach((card) => {
+      const { queryByText } = within(card);
+      expect(queryByText(/alive/i)).not.toBeInTheDocument();
+      expect(queryByText(/dead/i)).toBeInTheDocument();
+    });
+  });
 
-    await userEvent.click(statusFilterSelect);
-    const aliveOption = await screen.findByTestId(`select-option Alive`);
-    await userEvent.click(aliveOption);
+  it("renders empty message", async () => {
+    server.use(MOCKS_OVERRIDES.characters.getCharacters(() => []));
+    renderWithProviders();
+    expect(
+      await screen.findByText(/Nothing here to show/i)
+    ).toBeInTheDocument();
+  });
 
-    expect(screen.queryAllByText(/Alive/i)).toBeDefined();
+  it("renders error message", async () => {
+    server.use(
+      MOCKS_OVERRIDES.characters.getCharacters(() => {
+        throw new Error();
+      })
+    );
+    renderWithProviders();
+    expect(await screen.findByText(/error happened/i)).toBeInTheDocument();
   });
 });
 
 const renderWithProviders = () => {
-  const router = createMemoryRouter(
-    [{ path: "/characters", element: <CharactersPage /> }],
-    {
-      initialEntries: ["/characters"],
-    }
-  );
+  const router = createRouter({
+    initialEntries: [appRoutes.charactersPage],
+  });
   render(<RouterProvider router={router} />);
+};
+
+const queries = {
+  charactersContainer: () =>
+    screen.getByRole("list", {
+      name: /characters/i,
+    }),
+  charactersItems() {
+    return within(this.charactersContainer()).getAllByRole("listitem");
+  },
 };

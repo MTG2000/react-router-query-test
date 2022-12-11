@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Character } from "rickmortyapi/dist/interfaces";
 
@@ -16,7 +15,10 @@ export default function CharactersList({ characters }: Props) {
     );
 
   return (
-    <ul className="grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
+    <ul
+      title="characters"
+      className="grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]"
+    >
       {characters.map((character) => (
         <li
           key={character.id}

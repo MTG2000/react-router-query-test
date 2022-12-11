@@ -2,7 +2,6 @@ import { Link, useLoaderData } from "react-router-dom";
 import { charactersPageQuery, LoaderData } from "./charactersPageQuery";
 import { useQuery } from "@tanstack/react-query";
 import CharactersList from "./CharactersList";
-import React, { ComponentType, useState } from "react";
 import CharactersFilters from "./CharactersFilters";
 import { withProviders } from "@/utils/helpers";
 import {
@@ -12,6 +11,7 @@ import {
 
 function CharactersPage() {
   const data = useLoaderData() as LoaderData;
+
   const { status, gender } = useCharactersFilter();
 
   const query = useQuery({

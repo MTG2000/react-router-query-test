@@ -12,6 +12,7 @@ export default function ErrorOverlay({
   children,
 }: Prosp) {
   const error = useRouteError();
+  console.log(error);
 
   const errorInfo = getErrorInfo(error, { defaultTitle, defaultBody });
 

@@ -57,6 +57,7 @@ export default function CharactersFilters(props: Props) {
           <label htmlFor="status-filter">Status</label>
           <Select
             id="status-filter"
+            aria-label="status-filter"
             formatOptionLabel={(option) => (
               <span data-testid={`select-option ${option.label}`}>
                 {option.label}
@@ -76,6 +77,7 @@ export default function CharactersFilters(props: Props) {
           <label htmlFor="gender-filter">Gender</label>
           <Select
             id="gender-filter"
+            aria-label="gender-filter"
             options={genderOptions}
             onChange={(option) => filters.setGender(option?.value)}
             value={genderOptions.find((o) => o.value === filters.gender)}
@@ -89,7 +91,6 @@ export default function CharactersFilters(props: Props) {
             classNames={{
               option: () => "!text-gray-900",
             }}
-            aria-label="gender filter"
           />
         </div>
       </div>

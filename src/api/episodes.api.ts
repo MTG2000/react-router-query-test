@@ -22,3 +22,9 @@ export async function getEpisodeById(id: number) {
 
   return json as Episode;
 }
+
+export const apiRoutes = {
+  getAllEpisodes: "https://rickandmortyapi.com/api/episode",
+  getEpisodeById: (id: number) =>
+    `https://rickandmortyapi.com/api/episode/${id}`,
+};
