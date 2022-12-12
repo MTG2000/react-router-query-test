@@ -2,7 +2,13 @@ import { MOCKS_OVERRIDES } from "@/mocks/handlers";
 import { server } from "@/mocks/server";
 import { createRouter } from "@/router/rootRouter";
 import { appRoutes } from "@/router/routes";
-import { render, screen, userEvent, within } from "@/utils/tests.utils";
+import {
+  render,
+  screen,
+  userEvent,
+  waitForElementToBeRemoved,
+  within,
+} from "@/utils/tests.utils";
 import { RouterProvider } from "react-router-dom";
 
 describe("Characters Page", () => {
@@ -22,9 +28,13 @@ describe("Characters Page", () => {
     const deadOption = await screen.findByTestId(`select-option Dead`);
     await userEvent.click(deadOption);
 
+    await waitForElementToBeRemoved(() => screen.queryByTestId("loading"));
+
     const charactersCards = queries.charactersItems();
+
     charactersCards.forEach((card) => {
       const { queryByText } = within(card);
+
       expect(queryByText(/alive/i)).not.toBeInTheDocument();
       expect(queryByText(/dead/i)).toBeInTheDocument();
     });

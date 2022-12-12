@@ -47,7 +47,10 @@ export default function CharactersFilters(props: Props) {
   return (
     <div className="bg-gray-900 p-16 rounded relative">
       {props.isLoading && (
-        <div className="absolute inset-0 rounded bg-gray-300 bg-opacity-40 z-10 flex flex-col justify-center items-center">
+        <div
+          data-testid="loading"
+          className="absolute inset-0 rounded bg-gray-300 bg-opacity-40 z-10 flex flex-col justify-center items-center"
+        >
           <DotLoader color="black" size={48} />
         </div>
       )}
