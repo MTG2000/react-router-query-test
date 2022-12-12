@@ -1,4 +1,4 @@
-# React Router Query Playground
+# React Router + Query experiment
 
 A small project where I'm playing around with how React Router new data loading features would work with React-Query library.
 
