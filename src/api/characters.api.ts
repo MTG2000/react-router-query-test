@@ -1,8 +1,6 @@
-import { removeUndefinedFromObject } from "@/utils/helpers";
+import { delay, removeUndefinedFromObject } from "@/utils/helpers";
 import axios from "axios";
 import { Info, Character } from "rickmortyapi/dist/interfaces";
-
-const delay = (ms: number = 2000) => new Promise((res) => setTimeout(res, ms));
 
 type Filters = {
   status: "alive" | "dead" | "unknown";
@@ -16,6 +14,7 @@ export const apiRoutes = {
 };
 
 export async function getCharacters(_filters?: Partial<Filters>) {
+  await delay();
   let url = apiRoutes.getCharacters;
   const filters = removeUndefinedFromObject(_filters);
   const hasFilters = filters && Object.keys(filters).length > 0;
@@ -37,6 +36,7 @@ export async function getCharacters(_filters?: Partial<Filters>) {
 }
 
 export async function getCharacterById(id: number) {
+  await delay();
   const res = await axios.get(apiRoutes.getCharacterById(id));
 
   if (res.data.error) throw new Error(res.data.error);

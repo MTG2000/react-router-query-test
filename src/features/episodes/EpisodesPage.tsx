@@ -49,7 +49,7 @@ function EpisodesListPage() {
       <Suspense
         fallback={
           <p className="text-body2 text-white text-center py-36">
-            Loading episodes...
+            Loading episodes (deferred)...
           </p>
         }
       >

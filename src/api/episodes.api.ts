@@ -1,16 +1,16 @@
-import * as rickMortyApi from "rickmortyapi";
+import { delay } from "@/utils/helpers";
 import { Episode, Info } from "rickmortyapi/dist/interfaces";
 
-const delay = (ms: number = 2000) => new Promise((res) => setTimeout(res, ms));
-
 export async function getAllEpisodes() {
-  return fetch("https://rickandmortyapi.com/api/episode").then((res) =>
-    res.json()
-  ) as Promise<Info<Episode[]>>;
+  await delay();
+  return fetch(apiRoutes.getAllEpisodes).then((res) => res.json()) as Promise<
+    Info<Episode[]>
+  >;
 }
 
 export async function getEpisodeById(id: number) {
-  const res = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
+  await delay();
+  const res = await fetch(apiRoutes.getEpisodeById(id));
   const json = await res.json();
 
   if (!res.ok)
