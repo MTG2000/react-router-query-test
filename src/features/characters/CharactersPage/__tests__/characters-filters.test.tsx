@@ -1,10 +1,10 @@
-import { render, screen } from "@/utils/tests.utils";
-import CharactersFilters from "../CharactersFilters";
-import { CharactersFiltersProvider } from "../CharactersFiltersContext";
-import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor } from '@/utils/tests.utils';
+import CharactersFilters from '../CharactersFilters';
+import { CharactersFiltersProvider } from '../CharactersFiltersContext';
+import userEvent from '@testing-library/user-event';
 
-describe("Characters Filters", () => {
-  it("Renders correctly", () => {
+describe('Characters Filters', () => {
+  it('Renders correctly', () => {
     renderWithProviders();
 
     const statusSelect = queries.statusSelect();
@@ -14,7 +14,7 @@ describe("Characters Filters", () => {
     expect(genderSelect).toBeInTheDocument();
   });
 
-  it("Changes values correctly", async () => {
+  it('Changes values correctly', async () => {
     renderWithProviders();
 
     const statusSelect = queries.statusSelect();
@@ -29,6 +29,14 @@ describe("Characters Filters", () => {
 
     const maleOption = await screen.findByTestId(`select-option Male`);
     await userEvent.click(maleOption);
+    await waitFor(() => {
+      // ⚠️ `no-wait-for-side-effects` ESLint error
+      // don't call side-effects w/in `waitFor` callback
+      // it could get called N number of times
+      userEvent.type(screen.getByRole('input'), '{arrowdown}');
+
+      expect(screen.getByTestId('item3')).toBeChecked();
+    });
 
     expect(screen.getByText(/alive/i)).toBeInTheDocument();
 
@@ -40,7 +48,7 @@ const renderWithProviders = () =>
   render(
     <CharactersFiltersProvider>
       <CharactersFilters />
-    </CharactersFiltersProvider>
+    </CharactersFiltersProvider>,
   );
 
 const queries = {

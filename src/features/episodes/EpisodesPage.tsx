@@ -1,5 +1,5 @@
-import path from "path";
-import { Suspense } from "react";
+import path from 'path';
+import { Suspense } from 'react';
 import {
   Await,
   Link,
@@ -8,10 +8,10 @@ import {
   Outlet,
   useLoaderData,
   useLocation,
-} from "react-router-dom";
-import EpisodeDetailsModal from "./EpisodeDetailsModal";
-import EpisodeDetailsPage from "./EpisodeDetailsPage";
-import { LoaderData } from "./episodesPageQuery";
+} from 'react-router-dom';
+import EpisodeDetailsModal from './EpisodeDetailsModal';
+import EpisodeDetailsPage from './EpisodeDetailsPage';
+import { LoaderData } from './episodesPageQuery';
 
 export default function EpisodesPageWrapper() {
   const { pathname, state } = useLocation();
@@ -19,13 +19,9 @@ export default function EpisodesPageWrapper() {
   const onDetailsPage = isOnDetailsPage(pathname);
   const openAsModal = state?.openModal;
 
-  const whatToShow = onDetailsPage
-    ? openAsModal
-      ? "list + modal"
-      : "details_page"
-    : "list_page";
+  const whatToShow = onDetailsPage ? (openAsModal ? 'list + modal' : 'details_page') : 'list_page';
 
-  if (whatToShow === "list + modal")
+  if (whatToShow === 'list + modal')
     return (
       <>
         <EpisodesListPage />
@@ -33,11 +29,11 @@ export default function EpisodesPageWrapper() {
       </>
     );
 
-  if (whatToShow === "details_page") return <EpisodeDetailsPage />;
+  if (whatToShow === 'details_page') return <EpisodeDetailsPage />;
 
-  if (whatToShow === "list_page") return <EpisodesListPage />;
+  if (whatToShow === 'list_page') return <EpisodesListPage />;
 
-  throw Error("URL invalid. Please go back to the episodes page & try again.");
+  throw Error('URL invalid. Please go back to the episodes page & try again.');
 }
 
 function EpisodesListPage() {
@@ -45,37 +41,32 @@ function EpisodesListPage() {
 
   return (
     <div>
-      <h1 className="text-h1 mb-32">Episodes</h1>
+      <h1 className='text-h1 mb-32'>Episodes</h1>
       <Suspense
         fallback={
-          <p className="text-body2 text-white text-center py-36">
-            Loading episodes (deferred)...
-          </p>
+          <p className='text-body2 text-white text-center py-36'>Loading episodes (deferred)...</p>
         }
       >
         <Await resolve={data}>
           {(resolved: typeof data) => (
-            <ul className="grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
+            <ul className='grid gap-16 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]'>
               {resolved.results?.map((episode) => (
-                <li
-                  key={episode.id}
-                  className="rounded-12 overflow-hidden bg-gray-900"
-                >
+                <li key={episode.id} className='rounded-12 overflow-hidden bg-gray-900'>
                   <Link
                     to={episode.id.toString()}
                     state={{
-                      loadingText: "Getting Episode Details...",
+                      loadingText: 'Getting Episode Details...',
                       openModal: true,
                     }}
-                    className="flex flex-col h-full"
+                    className='flex flex-col h-full'
                   >
-                    <div className="p-12 text-white flex flex-col gap-4 grow">
-                      <p className="font-medium text-body1">{episode.name}</p>
+                    <div className='p-12 text-white flex flex-col gap-4 grow'>
+                      <p className='font-medium text-body1'>{episode.name}</p>
                       <p>{episode.episode}</p>
-                      <p className="font-medium text-gray-400 text-body4 mb-4">
+                      <p className='font-medium text-gray-400 text-body4 mb-4'>
                         {episode.air_date}
                       </p>
-                      <button className="bg-gray-100 text-gray-800 px-12 py-4 rounded-8 w-full  mt-auto">
+                      <button className='bg-gray-100 text-gray-800 px-12 py-4 rounded-8 w-full  mt-auto'>
                         Read more
                       </button>
                     </div>
@@ -91,5 +82,5 @@ function EpisodesListPage() {
 }
 
 function isOnDetailsPage(pathname: string) {
-  return matchPath("/episodes/:episodeId", pathname);
+  return matchPath('/episodes/:episodeId', pathname);
 }

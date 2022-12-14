@@ -1,2 +1,2 @@
-export * from "./misc";
-export * from "./withProviders";
+export * from './misc';
+export * from './withProviders';

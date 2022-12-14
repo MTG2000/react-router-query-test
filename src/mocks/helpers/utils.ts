@@ -1,4 +1,4 @@
-import { rest } from "msw";
+import { rest } from 'msw';
 
 export function wrapWithInfo<T>(data: T[]) {
   return {
@@ -16,7 +16,7 @@ export const createOverrideHandler =
   <T extends string | Array<any> | object>(
     request: keyof typeof rest,
     url: string,
-    options?: { wrapResponse?: (res: any) => any }
+    options?: { wrapResponse?: (res: any) => any },
   ) =>
   (mockFn: () => T) =>
     rest[request](url, (req, res, ctx) => {
@@ -24,19 +24,17 @@ export const createOverrideHandler =
         const result = mockFn();
         return res(
           ctx.status(200),
-          ctx.json(
-            options?.wrapResponse ? options?.wrapResponse(result) : result
-          )
+          ctx.json(options?.wrapResponse ? options?.wrapResponse(result) : result),
         );
       } catch (error) {
         const status = (error as any).status ?? 500;
-        const data = (error as any).data ?? "";
+        const data = (error as any).data ?? '';
 
         return res(
           ctx.status(status),
           ctx.json({
             error: data,
-          })
+          }),
         );
       }
     });

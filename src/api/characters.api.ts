@@ -1,16 +1,15 @@
-import { delay, removeUndefinedFromObject } from "@/utils/helpers";
-import axios from "axios";
-import { Info, Character } from "rickmortyapi/dist/interfaces";
+import { delay, removeUndefinedFromObject } from '@/utils/helpers';
+import axios from 'axios';
+import { Info, Character } from 'rickmortyapi/dist/interfaces';
 
 type Filters = {
-  status: "alive" | "dead" | "unknown";
-  gender: "male" | "female" | "genderless" | "unknown";
+  status: 'alive' | 'dead' | 'unknown';
+  gender: 'male' | 'female' | 'genderless' | 'unknown';
 };
 
 export const apiRoutes = {
-  getCharacters: "https://rickandmortyapi.com/api/character",
-  getCharacterById: (id: number) =>
-    `https://rickandmortyapi.com/api/character/${id}`,
+  getCharacters: 'https://rickandmortyapi.com/api/character',
+  getCharacterById: (id: number) => `https://rickandmortyapi.com/api/character/${id}`,
 };
 
 export async function getCharacters(_filters?: Partial<Filters>) {
@@ -21,8 +20,8 @@ export async function getCharacters(_filters?: Partial<Filters>) {
 
   if (hasFilters) {
     Object.entries(filters).forEach(([key, value], idx) => {
-      if (idx === 0) url += "?";
-      else url += "&";
+      if (idx === 0) url += '?';
+      else url += '&';
 
       url += `${key}=${value}`;
     });

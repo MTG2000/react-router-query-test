@@ -1,8 +1,4 @@
-import {
-  QueryClient,
-  QueryFunction,
-  QueryFunctionContext,
-} from "@tanstack/react-query";
+import { QueryClient, QueryFunction, QueryFunctionContext } from '@tanstack/react-query';
 
 type FF =
   | (() => { queryFn: QueryFunctionContext })
@@ -15,9 +11,9 @@ type queryCreatorFunction = (...params: any) => {
 };
 
 export type LoaderReturnType<T extends queryCreatorFunction> = Awaited<
-  ReturnType<ReturnType<T>["queryFn"]>
+  ReturnType<ReturnType<T>['queryFn']>
 >;
 
-export type DeferredLoaderReturnType<
-  T extends (p: any) => { queryFn: QueryFunction }
-> = { data: Awaited<ReturnType<ReturnType<T>["queryFn"]>> };
+export type DeferredLoaderReturnType<T extends (p: any) => { queryFn: QueryFunction }> = {
+  data: Awaited<ReturnType<ReturnType<T>['queryFn']>>;
+};

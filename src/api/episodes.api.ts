@@ -1,11 +1,9 @@
-import { delay } from "@/utils/helpers";
-import { Episode, Info } from "rickmortyapi/dist/interfaces";
+import { delay } from '@/utils/helpers';
+import { Episode, Info } from 'rickmortyapi/dist/interfaces';
 
 export async function getAllEpisodes() {
   await delay();
-  return fetch(apiRoutes.getAllEpisodes).then((res) => res.json()) as Promise<
-    Info<Episode[]>
-  >;
+  return fetch(apiRoutes.getAllEpisodes).then((res) => res.json()) as Promise<Info<Episode[]>>;
 }
 
 export async function getEpisodeById(id: number) {
@@ -23,7 +21,6 @@ export async function getEpisodeById(id: number) {
 }
 
 export const apiRoutes = {
-  getAllEpisodes: "https://rickandmortyapi.com/api/episode",
-  getEpisodeById: (id: number) =>
-    `https://rickandmortyapi.com/api/episode/${id}`,
+  getAllEpisodes: 'https://rickandmortyapi.com/api/episode',
+  getEpisodeById: (id: number) => `https://rickandmortyapi.com/api/episode/${id}`,
 };

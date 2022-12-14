@@ -1,23 +1,17 @@
-import { MOCKS_OVERRIDES } from "@/mocks/handlers";
-import { server } from "@/mocks/server";
-import { createRouter } from "@/router/rootRouter";
-import { appRoutes } from "@/router/routes";
-import {
-  render,
-  screen,
-  userEvent,
-  waitForElementToBeRemoved,
-  within,
-} from "@/utils/tests.utils";
-import { RouterProvider } from "react-router-dom";
+import { MOCKS_OVERRIDES } from '@/mocks/handlers';
+import { server } from '@/mocks/server';
+import { createRouter } from '@/router/rootRouter';
+import { appRoutes } from '@/router/routes';
+import { render, screen, userEvent, waitForElementToBeRemoved, within } from '@/utils/tests.utils';
+import { RouterProvider } from 'react-router-dom';
 
-describe("Characters Page", () => {
-  it("renders correctly", async () => {
+describe('Characters Page', () => {
+  it('renders correctly', async () => {
     renderWithProviders();
     expect(await screen.findByText(/Character 1/i)).toBeInTheDocument();
   });
 
-  it("filters changes listed results", async () => {
+  it('filters changes listed results', async () => {
     renderWithProviders();
 
     expect(screen.queryAllByText(/Alive/i)).toBeDefined();
@@ -28,7 +22,7 @@ describe("Characters Page", () => {
     const deadOption = await screen.findByTestId(`select-option Dead`);
     await userEvent.click(deadOption);
 
-    await waitForElementToBeRemoved(() => screen.queryByTestId("loading"));
+    await waitForElementToBeRemoved(() => screen.queryByTestId('loading'));
 
     const charactersCards = queries.charactersItems();
 
@@ -40,19 +34,17 @@ describe("Characters Page", () => {
     });
   });
 
-  it("renders empty message", async () => {
+  it('renders empty message', async () => {
     server.use(MOCKS_OVERRIDES.characters.getCharacters(() => []));
     renderWithProviders();
-    expect(
-      await screen.findByText(/Nothing here to show/i)
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/Nothing here to show/i)).toBeInTheDocument();
   });
 
-  it("renders error message", async () => {
+  it('renders error message', async () => {
     server.use(
       MOCKS_OVERRIDES.characters.getCharacters(() => {
         throw new Error();
-      })
+      }),
     );
     renderWithProviders();
     expect(await screen.findByText(/error happened/i)).toBeInTheDocument();
@@ -68,10 +60,10 @@ const renderWithProviders = () => {
 
 const queries = {
   charactersContainer: () =>
-    screen.getByRole("list", {
+    screen.getByRole('list', {
       name: /characters/i,
     }),
   charactersItems() {
-    return within(this.charactersContainer()).getAllByRole("listitem");
+    return within(this.charactersContainer()).getAllByRole('listitem');
   },
 };

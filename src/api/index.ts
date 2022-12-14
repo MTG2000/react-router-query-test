@@ -1,5 +1,5 @@
-import * as charactersApi from "./characters.api";
-import * as episodesApi from "./episodes.api";
+import * as charactersApi from './characters.api';
+import * as episodesApi from './episodes.api';
 
 const { apiRoutes: charactersRoutes, ...characters } = charactersApi;
 const { apiRoutes: episodesRoutes, ...episodes } = episodesApi;
