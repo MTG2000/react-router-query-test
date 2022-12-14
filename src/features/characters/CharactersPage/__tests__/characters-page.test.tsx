@@ -1,6 +1,6 @@
 import { MOCKS_OVERRIDES } from '@/mocks/handlers';
 import { server } from '@/mocks/server';
-import { createRouter } from '@/router/rootRouter';
+import { createRouter, RootRouter } from '@/router/rootRouter';
 import { appRoutes } from '@/router/routes';
 import {
   getByText,
@@ -59,10 +59,7 @@ describe('Characters Page', () => {
 });
 
 const renderWithProviders = () => {
-  const router = createRouter({
-    initialEntries: [appRoutes.charactersPage],
-  });
-  render(<RouterProvider router={router} />);
+  render(<RootRouter initialEntries={[appRoutes.charactersPage]} />);
 };
 
 const queries = {

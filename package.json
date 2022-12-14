@@ -41,6 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "@vitejs/plugin-react": "^2.2.0",
+    "@vitest/ui": "^0.25.8",
     "autoprefixer": "^10.4.13",
     "cross-fetch": "^3.1.5",
     "eslint": "^8.29.0",

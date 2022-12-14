@@ -8,7 +8,7 @@ import {
   Navigate,
   createMemoryRouter,
 } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import AppLayout from '../Common/AppLayout/AppLayout';
 import { getQueryClient, queryClient } from '@/utils/apiClient';
 import { characterDetailsLoader } from '@/features/characters/CharacterDetailsPage/characterDetailsQuery';
@@ -17,6 +17,7 @@ import { episodeDetailsLoader } from '@/features/episodes/episodeDetailsQuery';
 import { episodesPageLoader } from '@/features/episodes/episodesPageQuery';
 import ErrorOverlay from '@/Common/ErrorOverlay/ErrorOverlay';
 import { CONSTS } from '@/utils/consts';
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 
 const HomePage = React.lazy(() => import('../features/home/HomePage'));
 
@@ -30,7 +31,7 @@ const CharacterDetailsPage = React.lazy(
 const EpisodesPage = React.lazy(() => import('../features/episodes/EpisodesPage'));
 const EpisodeDetailsPage = React.lazy(() => import('../features/episodes/EpisodeDetailsPage'));
 
-const createRoutes = () =>
+const createRoutes = (queryClient: QueryClient) =>
   createRoutesFromElements(
     <Route
       element={<AppLayout />}
@@ -49,42 +50,39 @@ const createRoutes = () =>
         <Route
           path=':characterId'
           element={<CharacterDetailsPage />}
-          loader={characterDetailsLoader(getQueryClient())}
+          loader={characterDetailsLoader(queryClient)}
         />
-        <Route index element={<CharactersPage />} loader={charactersPageLoader(getQueryClient())} />
+        <Route index element={<CharactersPage />} loader={charactersPageLoader(queryClient)} />
       </Route>
 
       <Route
         path='/episodes'
         element={<EpisodesPage />}
-        loader={episodesPageLoader(getQueryClient())}
+        loader={episodesPageLoader(queryClient)}
         errorElement={<ErrorOverlay />}
       >
         <Route
           path=':episodeId'
           element={<EpisodeDetailsPage />}
-          loader={episodeDetailsLoader(getQueryClient())}
+          loader={episodeDetailsLoader(queryClient)}
         />
       </Route>
     </Route>,
   );
 
-export const routes = createRoutes();
+type CreateRouterOptions = Parameters<typeof createMemoryRouter>[1];
 
-export const createRouter = (options?: Parameters<typeof createMemoryRouter>[1]) => {
-  const routes = createRoutes();
+export const createRouter = (client: QueryClient, options?: CreateRouterOptions) => {
+  const routes = createRoutes(client);
 
   return CONSTS.isTestEnv
     ? createMemoryRouter(routes, options)
     : createBrowserRouter(routes, options);
 };
 
-export const useCurrentPath = () => {
-  const location = useLocation();
-  const matches = matchRoutes(routes, location);
-  return matches;
-};
+export const RootRouter = (props: CreateRouterOptions) => {
+  const client = useQueryClient();
+  const [router] = useState(() => createRouter(client, { initialEntries: props?.initialEntries }));
 
-export const RootRouter = () => {
-  return <RouterProvider router={createRouter()} />;
+  return <RouterProvider router={router} />;
 };

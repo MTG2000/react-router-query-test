@@ -1,6 +1,5 @@
-import { render, screen } from '@testing-library/react';
-
 import App from './App';
+import { render, screen } from '@/utils/tests.utils';
 
 describe('App', () => {
   it('renders headline', () => {
