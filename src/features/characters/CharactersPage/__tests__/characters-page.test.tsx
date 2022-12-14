@@ -21,7 +21,7 @@ describe('Characters Page', () => {
   it('filters changes listed results', async () => {
     renderWithProviders();
 
-    expect(screen.getAllByText(/Alive/i)).toBeDefined();
+    expect(await screen.findAllByText(/Alive/i)).toBeDefined();
 
     const statusFilterSelect = await screen.findByLabelText(/status/i);
     await userEvent.click(statusFilterSelect);
