@@ -1,19 +1,20 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import * as path from "path";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
   test: {
+    css: false,
     globals: true,
-    environment: "jsdom",
-    setupFiles: "./src/setupTests.js",
+    environment: 'jsdom',
+    setupFiles: ['./vitest/setupTests.ts'],
   },
 });

@@ -18,7 +18,15 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "import", "jsx-a11y", "react-hooks", "prettier","testing-library"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import",
+    "jsx-a11y",
+    "react-hooks",
+    "prettier",
+    "testing-library"
+  ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
@@ -40,15 +48,16 @@
         "endOfLine": "auto",
         "singleQuote": true
       }
-    ],
-		"testing-library/await-async-query": "error",
-		"testing-library/no-await-sync-query": "error",
-		"testing-library/no-debugging-utils": "warn",
-		"testing-library/no-dom-import": "off",
-    "no-wait-for-side-effects":"warn"
+    ]
   },
-  "overrides": [{
-    "files": ["'**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-    "extends": ["plugin:testing-library/react"]
-  }]
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)",
+        "src/setupTests.js"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
 }

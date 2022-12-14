@@ -1,9 +1,4 @@
-import { QueryClient, QueryFunction, QueryFunctionContext } from '@tanstack/react-query';
-
-type FF =
-  | (() => { queryFn: QueryFunctionContext })
-  | ((option?: any) => { queryFn: Function })
-  | ((...options: any[]) => { queryFn: Function });
+import { QueryFunction } from '@tanstack/react-query';
 
 type queryCreatorFunction = (...params: any) => {
   queryKey: any;

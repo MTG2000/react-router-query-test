@@ -2,7 +2,14 @@ import { MOCKS_OVERRIDES } from '@/mocks/handlers';
 import { server } from '@/mocks/server';
 import { createRouter } from '@/router/rootRouter';
 import { appRoutes } from '@/router/routes';
-import { render, screen, userEvent, waitForElementToBeRemoved, within } from '@/utils/tests.utils';
+import {
+  getByText,
+  render,
+  screen,
+  userEvent,
+  waitForElementToBeRemoved,
+  within,
+} from '@/utils/tests.utils';
 import { RouterProvider } from 'react-router-dom';
 
 describe('Characters Page', () => {
@@ -14,7 +21,7 @@ describe('Characters Page', () => {
   it('filters changes listed results', async () => {
     renderWithProviders();
 
-    expect(screen.queryAllByText(/Alive/i)).toBeDefined();
+    expect(screen.getAllByText(/Alive/i)).toBeDefined();
 
     const statusFilterSelect = await screen.findByLabelText(/status/i);
     await userEvent.click(statusFilterSelect);
@@ -27,10 +34,10 @@ describe('Characters Page', () => {
     const charactersCards = queries.charactersItems();
 
     charactersCards.forEach((card) => {
-      const { queryByText } = within(card);
+      const { queryByText, getByText } = within(card);
 
       expect(queryByText(/alive/i)).not.toBeInTheDocument();
-      expect(queryByText(/dead/i)).toBeInTheDocument();
+      expect(getByText(/dead/i)).toBeInTheDocument();
     });
   });
 
