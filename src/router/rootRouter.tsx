@@ -18,6 +18,10 @@ import { episodesPageLoader } from '@/features/episodes/episodesPageQuery';
 import ErrorOverlay from '@/Common/ErrorOverlay/ErrorOverlay';
 import { CONSTS } from '@/utils/consts';
 import { QueryClient, useQueryClient } from '@tanstack/react-query';
+import SignInPage from '@/features/auth/SignInPage/SignInPage';
+import AuthLayout from '@/features/auth/AuthLayout/AuthLayout';
+import SignUpPage from '@/features/auth/SignupPage/SignupPage';
+import VerifyEmail from '@/features/auth/VerifyEmailPage/VerifyEmailPage';
 
 const HomePage = React.lazy(() => import('../features/home/HomePage'));
 
@@ -66,6 +70,11 @@ const createRoutes = (queryClient: QueryClient) =>
           element={<EpisodeDetailsPage />}
           loader={episodeDetailsLoader(queryClient)}
         />
+      </Route>
+      <Route path='/auth' element={<AuthLayout />}>
+        <Route path='sign-in' element={<SignInPage />} />
+        <Route path='sign-up' element={<SignUpPage />} />
+        <Route path='verify-email' element={<VerifyEmail />} />
       </Route>
     </Route>,
   );

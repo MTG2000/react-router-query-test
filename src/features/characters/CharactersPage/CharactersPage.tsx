@@ -25,7 +25,7 @@ function CharactersPage() {
       <div className='grid grid-cols-1 md:grid-cols-[1fr_min(25%,326px)] gap-24'>
         <CharactersList characters={query.data.results} />
         <aside>
-          <div className='sticky top-24'>
+          <div className='sticky top-[96px]'>
             <CharactersFilters isLoading={query.isPreviousData} />
           </div>
         </aside>
